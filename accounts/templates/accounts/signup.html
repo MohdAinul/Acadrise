@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | LocalTutor</title>
+    <link rel="stylesheet" href="{% static 'main_app/css/signup.css' %}">
+</head>
+
+<body>
+    <div class="signup-container">
+        <!-- Left Section (Grey Background) -->
+        <div class="signup-left"></div>
+
+        <!-- Right Section (Form) -->
+        <div class="signup-right">
+            <h2 class="signup-header">Sign Up</h2>
+            <form method="post" class="signup-form">
+                {% csrf_token %}
+                <!-- Render Django Form Fields -->
+                {{ form.username.label_tag }}
+                {{ form.username }}
+
+                {{ form.email.label_tag }}
+                {{ form.email }}
+
+                {{ form.password.label_tag }}
+                {{ form.password }}
+
+                <!-- Radio Buttons for User Type -->
+                <div class="role-selection">
+                    <label>
+                        <input type="radio" name="user_type" value="student" required>
+                        I am a Student
+                    </label>
+                    <label>
+                        <input type="radio" name="user_type" value="teacher" required>
+                        I am a Teacher
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div class="login-link">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+    {% if form.errors %}
+    <ul class="text-danger">
+        {% for field, errors in form.errors.items %}
+        <li>{{ field }}: {{ errors|join:", " }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+</html>

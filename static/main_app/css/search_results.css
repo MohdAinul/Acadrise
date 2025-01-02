@@ -1,0 +1,77 @@
+.search-container {
+padding: 20px;
+text-align: center;
+}
+
+.search-form {
+margin-bottom: 20px;
+text-align: center;
+}
+
+.teacher-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+padding: 20px 0;
+}
+
+.teacher-card {
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+overflow: hidden;
+transition: transform 0.3s;
+text-align: center;
+}
+
+.teacher-card:hover {
+transform: translateY(-5px);
+}
+
+.card-image img {
+width: 100%;
+height: 150px;
+object-fit:scale-down;
+border-radius: 10px;
+max-height: 200px;
+}
+
+.card-content {
+padding: 15px;
+}
+
+.card-content h3 {
+margin: 10px 0;
+font-size: 1.2rem;
+font-weight: bold;
+color: #333;
+}
+
+.card-content p {
+margin: 5px 0;
+color: #555;
+font-size: 0.9rem;
+}
+
+.btn {
+display: inline-block;
+padding: 8px 12px;
+border-radius: 5px;
+text-decoration: none;
+color: #fff;
+font-size: 0.9rem;
+}
+
+.btn-primary {
+background-color: #4f46e5;
+}
+
+.btn-secondary {
+background-color: #f59e0b;
+}
+
+.btn:hover {
+opacity: 0.9;
+}
+

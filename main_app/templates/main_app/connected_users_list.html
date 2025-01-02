@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Connections</title>
+    <link rel="stylesheet" href="{% static 'main_app/css/connection_list.css' %}">
+</head>
+
+<body>
+    <div class="connection-container">
+        <div class="connection-header">Your Connections</div>
+
+        <!-- Search Bar -->
+        <div class="connection-search">
+            <input type="text" id="search" placeholder="Search...">
+        </div>
+
+        <!-- Connection List -->
+        <div class="connection-list">
+            {% if connected_users %}
+            {% for user in connected_users %}
+            <div class="connection-item" onclick="window.location.href='{% url 'chat_view' user.id %}'">
+                <img src="https://via.placeholder.com/50" alt="User Avatar">
+                <div class="user-details">
+                    <div class="user-name">{{ user.username }}</div>
+                    <div class="last-active">Last Active: {{ user.last_login|date:"d M, Y" }}</div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="no-connections">No connections found.</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

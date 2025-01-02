@@ -1,0 +1,38 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="search-container">
+    <h2>Search for Teachers</h2>
+
+    <form method="get" action="{% url 'search_teachers' %}" class="search-form">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if teachers %}
+    <h3>Results:</h3>
+    <div class="teacher-grid">
+        {% for teacher in teachers %}
+        <div class="teacher-card">
+            <div class="card-image">
+                {% if teacher.profile_picture %}
+                <img src="{{ teacher.profile_picture.url }}" alt="{{ teacher.name }}">
+                {% else %}
+                <img src="{% static 'main_app/images/default-teacher.jpg' %}" alt="Default Profile Picture">
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <h3>{{ teacher.name }}</h3>
+                <p><strong>Subject(s):</strong> {{ teacher.subjects }}</p>
+                <p><strong>City:</strong> {{ teacher.city }}</p>
+                <p><strong>Price:</strong> ₹{{ teacher.price }}</p>
+                <a href="{% url 'teacher_profile' teacher.id %}" class="btn btn-secondary">View Profile</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% elif teachers is not None %}
+    <p>No teachers found for this subject and pin code.</p>
+    {% endif %}
+</div>
+{% endblock %}

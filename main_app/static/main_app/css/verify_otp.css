@@ -1,0 +1,148 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* OTP Container */
+.otp-container {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+/* Left Side with Image */
+.otp-left {
+    flex: 1;
+    background: url('../images/otp-img.jpg') no-repeat center center/cover;
+}
+
+/* Right Section */
+.otp-right {
+    flex: 1.5;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.otp-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.otp-subheader {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.otp-inputs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.otp-inputs input {
+    width: 80%;
+    height: 3rem;
+    font-size: 1.8rem;        
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.otp-inputs input:focus {
+    border-color: #4f46e5;
+}
+
+.btn-primary {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #444;
+}
+
+.otp-info {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+/* Message Box */
+.message-box {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .otp-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .otp-left {
+        display: none;
+        /* Hide left side on mobile view */
+    }
+
+    .otp-right {
+        padding: 1.5rem;
+    }
+}
+
+/* Style for the single OTP field */
+.otp-single-field {
+    width: 18rem;
+    /* Adjusted width for a longer field */
+    height: 3rem;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    /* Adds spacing between digits */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.otp-single-field:focus {
+    border-color: #4f46e5;
+}

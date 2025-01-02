@@ -1,0 +1,26 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="connection-requests-container">
+    <h2 class="section-header">Pending Connection Requests</h2>
+
+    {% if pending_requests %}
+    <ul class="requests-list">
+        {% for request in pending_requests %}
+        <li class="request-item">
+            <span class="request-text">{{ request.student.username }} has requested to connect.</span>
+            <form method="post" action="{% url 'teacher_connection_requests' %}" class="request-actions">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ request.id }}">
+                <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-requests">No pending connection requests.</p>
+    {% endif %}
+</div>
+{% endblock %}

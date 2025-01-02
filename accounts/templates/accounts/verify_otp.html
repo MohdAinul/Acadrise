@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP | LocalTutor</title>
+    <link rel="stylesheet" href="{% static 'main_app/css/verify_otp.css' %}">
+</head>
+
+<body>
+    <div class="otp-container">
+        <!-- Left Side with Image -->
+        <div class="otp-left"></div>
+
+        <!-- Right Section -->
+        <div class="otp-right">
+            <h2 class="otp-header">Enter the Code</h2>
+            <p class="otp-subheader">
+                Enter the OTP code that we sent to your email<br>
+                <b>{{ user.email }}</b>
+            </p>
+
+            <!-- Single Input Field for OTP -->
+            <form method="post" class="otp-form">
+                {% csrf_token %}
+                <div class="otp-inputs">
+                    <input type="text" name="otp" id="otp" maxlength="6" placeholder="Enter 6-digit OTP" required>
+                </div>
+                <button type="submit" class="btn-primary">Verify</button>
+                <p class="otp-info">One more step to get started.</p>
+            </form>
+
+            {% if messages %}
+            <div class="message-box">
+                {% for message in messages %}
+                <p class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                    {{ message }}
+                </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+<script>
+    // Focus behavior for OTP input
+    document.getElementById('otp').addEventListener('input', function () {
+        const input = this;
+        const maxLength = input.getAttribute('maxlength');
+
+        // Auto-submit when OTP length matches the required digits
+        if (input.value.length >= maxLength) {
+            input.form.submit();
+        }
+    });
+</script>
+
+</html>

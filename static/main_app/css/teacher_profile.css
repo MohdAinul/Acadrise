@@ -1,0 +1,124 @@
+/* General Container */
+.teacher-profile-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 30px;
+    background: linear-gradient(to bottom right, #e3f2fd, #f3e5f5);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    /* Responsive for smaller screens */
+}
+
+/* Profile Image */
+.teacher-profile-image img {
+    width: 200px;
+    /* Increased size */
+    height: 200px;
+    /* Increased size */
+    object-fit: cover;
+    /* Ensures face is shown */
+    border-radius: 50%;
+    /* Makes the image circular */
+    border: 5px solid #4f46e5;
+    transition: transform 0.3s ease;
+}
+
+.teacher-profile-image img:hover {
+    transform: scale(1.1);
+}
+
+/* Content Section */
+.teacher-profile-content {
+    flex: 1;
+    /* Makes content fill remaining space */
+    color: #333;
+    text-align: left;
+}
+
+/* Name Styling */
+.teacher-profile-content h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    /* Larger font size */
+    color: #4f46e5;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* Subject Styling */
+.teacher-profile-content p.subject {
+    font-size: 1.5rem;
+    /* Larger font size */
+    font-weight: 500;
+    color: #757575;
+    margin-bottom: 10px;
+}
+
+/* About Section */
+.teacher-profile-content p.about {
+    font-size: 1.2rem;
+    /* Increased font size */
+    font-style: italic;
+    color: #6d6d6d;
+    margin-bottom: 15px;
+}
+
+/* City and Rate Styling */
+.teacher-profile-content p {
+    margin: 8px 0;
+    font-size: 1.2rem;
+    color: #424242;
+}
+
+.teacher-profile-content p strong {
+    color: #4f46e5;
+}
+
+/* Connect Button */
+.teacher-profile-content .btn-connect {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #4f46e5;
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 30px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.teacher-profile-content .btn-connect:hover {
+    background-color: #3b3ae5;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .teacher-profile-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .teacher-profile-image img {
+        width: 150px;
+        /* Adjust for smaller screens */
+        height: 150px;
+    }
+
+    .teacher-profile-content h2 {
+        font-size: 2rem;
+        /* Adjust for smaller screens */
+    }
+
+    .teacher-profile-content p {
+        font-size: 1rem;
+        /* Adjust for smaller screens */
+    }
+}

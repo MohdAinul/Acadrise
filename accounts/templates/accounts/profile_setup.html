@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if is_student %} Student Profile Setup
+        {% elif is_teacher %} Teacher Profile Setup
+        {% else %} Profile Setup {% endif %}
+    </title>
+    <link rel="stylesheet" href="{% static 'main_app/css/profile_setup.css' %}">
+</head>
+
+<body>
+    <div class="form-container">
+        <!-- Dynamic Header -->
+        <h2 class="form-header">
+            {% if is_student %} Student Profile Setup {% elif is_teacher %} Teacher Profile Setup {% endif %}
+        </h2>
+
+        <!-- Profile Form -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn-submit">Save</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Acadrise - Personalized Learning</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Acadrise: Personalized home tutoring platform offering early career guidance and skill-based education.">
+    <meta name="keywords" content="home tutoring, personalized learning, career guidance, education platform">
+    <meta name="author" content="Acadrise Team">
+    <link rel="stylesheet" href="{% static 'main_app/css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{% static 'main_app/images/favicon.ico' %}" type="image/png">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7HTCNKD9PE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7HTCNKD9PE');
+    </script>
+
+</head>
+
+<body>
+<header class="navbar">
+    <div class="logo">ACADRISE</div>
+    <nav class="desktop-nav">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="#footer-about">About</a>
+        <a href="#footer-contact">Contact Us</a>
+    </nav>
+
+    {% if user.is_authenticated %}
+    <div class="auth-actions">
+        <!-- View Connection Requests Button -->
+        <a href="{% url 'teacher_connection_requests' %}" class="btn btn-connection-requests">
+        Requests
+        </a>
+
+        <!-- Message Icon -->
+        <a href="{% url 'connected_users_list' %}" class="icon-link" title="Messages">
+            <i class="fas fa-envelope"></i>
+        </a>
+
+        <!-- Profile Icon -->
+        <a href="{% url 'profile' %}" class="icon-link" title="Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+
+        <!-- Logout Button -->
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-logout">
+                Logout
+            </button>
+        </form>
+    </div>
+    {% else %}
+    <div class="auth-buttons">
+        <button class="btn btn-primary" onclick="window.location.href='{% url 'login' %}'">Login</button>
+        <button class="btn btn-secondary" onclick="window.location.href='{% url 'signup' %}'">Sign Up for Free</button>
+    </div>
+    {% endif %}
+    <div class="mobile-menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- Mobile Navigation -->
+<nav class="mobile-nav" id="mobileNav">
+    <a href="#" id="mobile-home-link">Home</a>
+    <a href="#footer-about">About</a>
+    <a href="#footer-contact">Contact Us</a>
+    
+</nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 id="hero-greeting">Find a Perfect Tutor for Your Need</h1>
+        <p>Learn your choice of course with personalized tutoring in your area.</p>
+        <form method="GET" action="{% url 'search_teachers' %}">
+            <input type="text" name="subject" placeholder="Physics" required>
+            <input type="text" name="pin_code" placeholder="Pincode" required>
+            <button class="btn" type="submit">Find a Teacher</button>
+        </form>
+    </section>
+{% load static %}
+<!-- Dynamic Tutor Cards -->
+<!-- Tutor Cards -->
+<section class="tutor-cards">
+    {% if teachers %}
+    {% for teacher in teachers %}
+    <div class="card">
+        {% if teacher.profile_picture %}
+        <img src="{{ teacher.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+        <img src="{% static 'main_app/images/default-profile.png' %}" alt="Default Profile Picture">
+        {% endif %}
+        <h3>{{ teacher.name }}</h3>
+        <p>{{ teacher.subjects }} | {{ teacher.about|default:"No about section available" }}</p>
+        <p class="price">₹{{ teacher.price|default:"0.00" }}</p>
+
+        <!-- Check if the user is logged in -->
+        {% if user.is_authenticated %}
+        <a href="{% url 'teacher_profile' teacher.id %}" class="btn">Connect</a>
+        {% else %}
+        <a href="{% url 'login' %}?next={% url 'teacher_profile' teacher.id %}" class="btn">
+            Login to Connect
+        </a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No teachers available at the moment.</p>
+    {% endif %}
+</section>
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section" id="footer-about">
+                <h3>About LocalTutor</h3>
+                <p>LocalTutor connects students with the best tutors for personalized learning experiences. Empowering
+                    education, one student at a time.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#footer-about">About</a></li>
+                    <li><a href="#footer-contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section" id="footer-contact">
+                <h3>Contact Us</h3>
+                <p>Email: support@localtutor.com</p>
+                <p>Phone: +1 123 456 7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LocalTutor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'main_app/js/script.js' %}"></script>
+    <script>
+        // Smooth Scrolling for Navbar Links
+        document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            });
+        });
+
+        // Dynamic Greeting with Enhanced Transition on Home Button Click
+        document.getElementById("home-link").addEventListener("click", function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+
+            const hours = new Date().getHours();
+            let greeting = "Welcome!";
+            if (hours < 12) greeting = "Good Morning!";
+            else if (hours < 18) greeting = "Good Afternoon!";
+            else greeting = "Good Evening!";
+
+            const heroGreeting = document.getElementById("hero-greeting");
+
+            // Apply enhanced transition effect for Home button click
+            heroGreeting.style.transition = "opacity 1.5s ease-out, transform 1.5s ease-out, color 1.5s, letter-spacing 1.5s";
+            heroGreeting.style.opacity = 0;
+            heroGreeting.style.transform = "rotateX(90deg)";
+
+            setTimeout(() => {
+                heroGreeting.innerText = `${greeting} Find a Perfect Tutor for Your Need`;
+                heroGreeting.style.opacity = 1;
+                heroGreeting.style.transform = "rotateX(0)";
+                heroGreeting.style.color = "#4f46e5"; // Adds a color change during the transition
+                heroGreeting.style.letterSpacing = "2px"; // Adds a spacing effect during the transition
+            }, 500);
+        });
+
+        // Refresh Greeting Transition
+        document.addEventListener("DOMContentLoaded", () => {
+            const hours = new Date().getHours();
+            let greeting = "Welcome!";
+            if (hours < 12) greeting = "Good Morning!";
+            else if (hours < 18) greeting = "Good Afternoon!";
+            else greeting = "Good Evening!";
+
+            const heroGreeting = document.getElementById("hero-greeting");
+            heroGreeting.style.transition = "opacity 1.5s, transform 1.5s";
+            heroGreeting.style.opacity = 0;
+            heroGreeting.style.transform = "translateY(-20px)";
+
+            setTimeout(() => {
+                heroGreeting.innerText = `${greeting} Find a Perfect Tutor for Your Need`;
+                heroGreeting.style.opacity = 1;
+                heroGreeting.style.transform = "translateY(0)";
+            }, 500);
+        });
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        function openSignUpModal() {
+            document.getElementById('signUpModal').style.display = 'block';
+        }
+        function closeSignUpModal() {
+            document.getElementById('signUpModal').style.display = 'none';
+        }
+        function toggleMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+
+</html>

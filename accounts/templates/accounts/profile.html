@@ -1,0 +1,81 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-wrapper">
+        <!-- Left Side: Profile Image -->
+        <div class="profile-image">
+            {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+            <img src="{% static 'main_app/images/default-profile.png' %}" alt="Default Profile Picture">
+            {% endif %}
+
+            <!-- Upload Form -->
+            <form method="POST" enctype="multipart/form-data" class="change-picture-form">
+                {% csrf_token %}
+                <label for="id_profile_picture" class="change-picture-label">Change Picture</label>
+                <input id="id_profile_picture" type="file" name="profile_picture" class="change-picture-input">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+
+        <!-- Right Side: Profile Form -->
+        <div class="profile-form-section">
+            <h2 class="profile-header">Profile</h2>
+            <form method="POST" enctype="multipart/form-data" class="profile-form">
+                {% csrf_token %}
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="id_name">Name</label>
+                    {{ form.name }}
+                </div>
+
+                <!-- Conditional Fields -->
+                {% if user_type == 'student' %}
+                <div class="form-group">
+                    <label for="id_student_class">Student Class</label>
+                    {{ form.student_class }}
+                </div>
+                {% else %}
+                <div class="form-group">
+                    <label for="id_classes_taught">Classes Taught</label>
+                    {{ form.classes_taught }}
+                </div>
+                <div class="form-group">
+                    <label for="id_subjects">Subjects</label>
+                    {{ form.subjects }}
+                </div>
+                <div class="form-group">
+                    <label for="id_price">Price (₹)</label>
+                    {{ form.price }}
+                </div>
+                {% endif %}
+
+                <!-- Common Fields -->
+                <div class="form-group">
+                    <label for="id_address">Address</label>
+                    {{ form.address }}
+                </div>
+                <div class="form-group">
+                    <label for="id_city">City</label>
+                    {{ form.city }}
+                </div>
+                <div class="form-group">
+                    <label for="id_pin_code">Pin Code</label>
+                    {{ form.pin_code }}
+                </div>
+                <div class="form-group">
+                    <label for="id_about">About</label>
+                    {{ form.about }}
+                </div>
+
+                <!-- Save Changes Button -->
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="teacher-profile-container">
+    <!-- Profile Image -->
+    <div class="teacher-profile-image">
+        {% if teacher.profile_picture %}
+        <img src="{{ teacher.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+        <img src="{% static 'main_app/images/default-teacher.jpg' %}" alt="Default Profile Picture">
+        {% endif %}
+    </div>
+
+    <!-- Content Section -->
+    <div class="teacher-profile-content">
+        <h2>{{ teacher.name }}</h2>
+        <p class="subject">{{ teacher.subjects }}</p>
+        <p class="about">{{ teacher.about|default:"This teacher hasn't provided an about section yet." }}</p>
+        <p><strong>City:</strong> {{ teacher.city }}</p>
+        <p><strong>price:</strong>₹{{ teacher.rate|default:00 }}</p>
+        {% if user.is_authenticated %}
+        <form action="{% url 'send_connection_request' teacher.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-connect">Connect</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

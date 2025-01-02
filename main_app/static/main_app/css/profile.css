@@ -1,0 +1,202 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Profile Container */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 250px;
+    background: linear-gradient(to bottom right, #e0e7ff, #f8f9fa);
+    overflow-y: auto;
+    margin-top: 100px;
+}
+
+/* Profile Wrapper */
+.profile-wrapper {
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+    padding: 150px;
+    gap: 20px;
+    /* Add space between image and form */
+    flex-direction: row;
+    /* Side-by-side layout on desktop */
+}
+
+/* Profile Image Section */
+.profile-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Align picture to the top */
+    align-items: center;
+    max-width: 200px;
+    margin-top: 200px;
+    margin-right: 50px;
+    margin-left: 20px;
+    /* Add slight spacing from the top */
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4f46e5;
+    margin-bottom: 15px;
+}
+
+.change-picture-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.change-picture-input {
+    display: none;
+}
+
+.btn-primary {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #4f46e5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #4338ca;
+}
+
+/* Profile Form Section */
+.profile-form-section {
+    flex: 3;
+    /* Allow form to take up more space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.profile-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 20px;
+        /* Reduce excessive padding for smaller screens */
+        margin-top: 200px;
+        /* Avoid large top margin */
+        justify-content: flex-start;
+        /* Align content to the top */
+        margin-bottom:1px;
+    }
+
+    .profile-wrapper {
+        flex-direction: column;
+        /* Stack profile picture and form vertically */
+        align-items: center;
+        /* Center-align content */
+        padding: 15px;
+        /* Reduce padding for better mobile layout */
+        gap: 30px;
+        /* Add space between image and form */
+    }
+
+    .profile-image {
+        margin: 0;
+        /* Remove desktop-specific margins */
+        margin-bottom: 5px;
+        /* Add spacing below image */
+        margin-top: 250px;
+        max-width: 100%;
+        /* Allow the image section to take full width */
+    }
+
+    .profile-image img {
+        width: 200px;
+        /* Smaller profile picture for mobile */
+        height: 200px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        /* Full-width buttons for mobile */
+    }
+
+    .profile-form-section {
+        width: 100%;
+        /* Ensure the form takes up full width */
+        margin-top: 1px;
+        /* Add space between sections */
+    }
+
+    .profile-header {
+        font-size: 1.5rem;
+        /* Adjust font size for smaller screens */
+        text-align: center;
+        /* Keep the title centered */
+        margin-bottom: 10px;
+    }
+}
+
+/* Desktop Adjustments */
+@media (min-width: 1024px) {
+    .profile-wrapper {
+        flex-direction: row;
+        align-items: flex-start;
+        /* Align form and picture properly */
+    }
+    
+}
