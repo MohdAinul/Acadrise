@@ -20,11 +20,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Profile
-from django.utils import timezone
+from django.utils import timezone 
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from .models import Teacher
 import sys
+from django.utils.timezone import now
 
 def home(request):
     return HttpResponse("Debug: Home view is working")
@@ -40,7 +41,6 @@ def signup(request):
 
             # Get the user type from the form
             user_type = form.cleaned_data['user_type']
-            print(f"Signup initiated with user_type: {user_type}")
             if not hasattr(user, 'profile'): 
                 profile = Profile.objects.create(user=user, user_type=user_type)
             else:  # If the user already has a profile
@@ -83,6 +83,22 @@ def verify_otp(request, user_id):
 
     return render(request, "accounts/verify_otp.html")
 
+
+def resend_otp(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    profile = user.profile
+
+    # Check rate limit
+    if profile.verification_code_expiry and now() < profile.verification_code_expiry - timezone.timedelta(minutes=4):
+        messages.error(request, 'Please wait before requesting a new OTP.')
+        return redirect('verify_otp', user_id=user.id)
+
+    # Generate new OTP and send email
+    otp = profile.generate_verification_code()
+    send_otp_email(user, otp)
+    messages.success(request, 'A new OTP has been sent to your email.')
+    return redirect('verify_otp', user_id=user.id)
+
 @login_required
 def profile_setup_student(request):
     user = request.user
@@ -101,6 +117,7 @@ def profile_setup_student(request):
         form = StudentProfileForm(instance=student)
 
     return render(request, 'accounts/profile_setup.html', {'form': form, 'is_student': True})
+
 @login_required
 def profile_setup_teacher(request):
     user = request.user

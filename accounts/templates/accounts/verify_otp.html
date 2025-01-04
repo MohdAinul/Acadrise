@@ -31,6 +31,10 @@
                 <button type="submit" class="btn-primary">Verify</button>
                 <p class="otp-info">One more step to get started.</p>
             </form>
+            <!-- Resend OTP Section -->
+            <p class="resend-otp">
+                Didn't receive the code? <a href="{% url 'resend_otp' user.id %}" class="btn-secondary">Resend OTP</a>
+            </p>
 
             {% if messages %}
             <div class="message-box">

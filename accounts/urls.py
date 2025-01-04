@@ -6,7 +6,8 @@ from django.urls import path, include
 from main_app import views as main_views 
 from main_app.views import home
 from django.contrib.auth import views as auth_views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('resend-otp/<int:user_id>/', views.resend_otp, name='resend_otp'),
     path('', views.home, name='home'),  # Home page
     path('password_reset/', 
         auth_views.PasswordResetView.as_view(template_name='accounts/password_reset.html'), 
@@ -32,3 +34,7 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'), 
         name='password_reset_complete'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

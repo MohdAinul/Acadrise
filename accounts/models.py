@@ -108,7 +108,7 @@ class User(AbstractUser):
     ]
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, null=True, blank=True)
     name = models.CharField(max_length=100, blank=True, null=True)
-    email = models.EmailField(unique=True) 
+    email = models.EmailField( ) 
     
     groups = models.ManyToManyField(
         'auth.Group',

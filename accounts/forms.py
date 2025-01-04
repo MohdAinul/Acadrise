@@ -18,12 +18,13 @@ class UsersignupForm(forms.ModelForm):
             'password': forms.PasswordInput(),
         }
     
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already registered. Please use a different email.")
-        return email
-
+   
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if ' ' in username:
+            raise forms.ValidationError("Username should not contain spaces.")
+        return username
+    
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
