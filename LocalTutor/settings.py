@@ -26,6 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 ALLOWED_HOSTS = [
     'acadrise.onrender.com',
+    'www.acadrise.com',
     '127.0.0.1',
     'localhost',
 ]
